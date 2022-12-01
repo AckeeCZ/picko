@@ -28,6 +28,7 @@
     "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
     "pretest": "yarn run esbuild && yarn run lint",
     "lint": "eslint src --ext ts",
+    "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
     "test": "node ./out/test/runTest.js",
     "test-compile": "tsc -p ./"
   },
