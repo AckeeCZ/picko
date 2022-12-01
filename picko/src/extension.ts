@@ -1,21 +1,33 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+import { window, commands } from 'vscode';
+import type { ExtensionContext } from 'vscode';
+import { Ticket } from './ticketingSystem';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "picko" is now active!');
+export function activate(context: ExtensionContext) {
+    let disposable = commands.registerCommand('picko.helloWorld', async () => {
+        // TODO - get tickets from ticketing system
+        const tickets = [
+            new Ticket({
+                id: 10001,
+                title: 'First ticket',
+                updatedOn: new Date(2022, 10, 16),
+            }),
+            new Ticket({
+                id: 10002,
+                title: 'Second ticket',
+                updatedOn: new Date(2022, 10, 13),
+            }),
+            new Ticket({
+                id: 10003,
+                title: 'Third ticket',
+                updatedOn: new Date(2022, 10, 18),
+            }),
+        ];
 
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with registerCommand
-    // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('picko.helloWorld', () => {
-        // The code you place here will be executed every time your command is executed
-        // Display a message box to the user
-        vscode.window.showInformationMessage('Hello World from picko!');
+        const ticket = await window.showQuickPick(tickets);
+
+        if (ticket) {
+            window.showInformationMessage(`Selected ticket ID ${ticket.id}`);
+        }
     });
 
     context.subscriptions.push(disposable);
