@@ -19,7 +19,20 @@
                 "command": "picko.helloWorld",
                 "title": "Hello World"
             }
-        ]
+        ],
+        "configuration": {
+            "title": "Picko",
+            "properties": {
+                "picko.redmineUrl": {
+                    "type": "string",
+                    "description": "Configure Redmine URL to access projects and tasks."
+                },
+                "picko.redmineApiKey": {
+                    "type": "string",
+                    "description": "Configure Redmine API key to access projects and tasks."
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run esbuild-base -- --minify",
