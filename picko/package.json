@@ -10,14 +10,15 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:picko.helloWorld"
+        "onStartupFinished",
+        "onCommand:picko.configure"
     ],
     "main": "./out/extension.js",
     "contributes": {
         "commands": [
             {
-                "command": "picko.helloWorld",
-                "title": "Hello World"
+                "command": "picko.configure",
+                "title": "Picko: Configure extension"
             }
         ],
         "configuration": {
