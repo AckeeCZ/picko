@@ -1,6 +1,8 @@
 import { window, commands } from 'vscode';
 import type { ExtensionContext } from 'vscode';
-import { Ticket } from './ticketingSystem';
+
+import { Ticket, TicketPriority, compareTickets } from './ticketingSystem';
+import * as config from './config';
 
 export function activate(context: ExtensionContext) {
     let disposable = commands.registerCommand('picko.helloWorld', async () => {
@@ -10,6 +12,7 @@ export function activate(context: ExtensionContext) {
                 id: 10001,
                 title: 'First ticket',
                 updatedOn: new Date(2022, 10, 16),
+                priority: TicketPriority.HIGH,
             }),
             new Ticket({
                 id: 10002,
@@ -21,12 +24,20 @@ export function activate(context: ExtensionContext) {
                 title: 'Third ticket',
                 updatedOn: new Date(2022, 10, 18),
             }),
+            new Ticket({
+                id: 10004,
+                title: 'Fourth ticket',
+                updatedOn: new Date(2022, 10, 12),
+            }),
         ];
 
-        const ticket = await window.showQuickPick(tickets);
+        const ticket = await window.showQuickPick(tickets.sort(compareTickets));
 
         if (ticket) {
-            window.showInformationMessage(`Selected ticket ID ${ticket.id}`);
+            // TODO - replace with branch creation
+            window.showInformationMessage(
+                `Selected ticket ID ${ticket.id} sorted by ${config.getTicketsOrderProperty()}`,
+            );
         }
     });
 

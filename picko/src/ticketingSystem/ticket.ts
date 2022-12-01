@@ -1,9 +1,9 @@
 import { QuickPickItem } from "vscode";
 
 export enum TicketPriority {
-  low,
-  medium,
-  high,
+  LOW,
+  MEDIUM,
+  HIGH,
 }
 
 export interface TicketInfo<TId> {
@@ -13,6 +13,8 @@ export interface TicketInfo<TId> {
   updatedOn: Date;
 }
 
+export type TicketProperty = keyof TicketInfo<any>;
+
 export class Ticket<TId extends number | string> implements QuickPickItem {
   private info: Required<TicketInfo<TId>>;
 
@@ -20,7 +22,7 @@ export class Ticket<TId extends number | string> implements QuickPickItem {
 
   constructor(info: TicketInfo<TId>) {
     this.info = {
-      priority: TicketPriority.medium,
+      priority: TicketPriority.MEDIUM,
       ...info,
     };
 
