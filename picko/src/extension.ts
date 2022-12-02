@@ -1,21 +1,44 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+import { window, commands } from 'vscode';
+import type { ExtensionContext } from 'vscode';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "picko" is now active!');
+import { Ticket, TicketPriority, compareTickets } from './ticketingSystem';
+import * as config from './config';
 
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with registerCommand
-    // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('picko.helloWorld', () => {
-        // The code you place here will be executed every time your command is executed
-        // Display a message box to the user
-        vscode.window.showInformationMessage('Hello World from picko!');
+export function activate(context: ExtensionContext) {
+    let disposable = commands.registerCommand('picko.helloWorld', async () => {
+        // TODO - get tickets from ticketing system
+        const tickets = [
+            new Ticket({
+                id: 10001,
+                title: 'First ticket',
+                updatedOn: new Date(2022, 10, 16),
+                priority: TicketPriority.HIGH,
+            }),
+            new Ticket({
+                id: 10002,
+                title: 'Second ticket',
+                updatedOn: new Date(2022, 10, 13),
+            }),
+            new Ticket({
+                id: 10003,
+                title: 'Third ticket',
+                updatedOn: new Date(2022, 10, 18),
+            }),
+            new Ticket({
+                id: 10004,
+                title: 'Fourth ticket',
+                updatedOn: new Date(2022, 10, 12),
+            }),
+        ];
+
+        const ticket = await window.showQuickPick(tickets.sort(compareTickets));
+
+        if (ticket) {
+            // TODO - replace with branch creation
+            window.showInformationMessage(
+                `Selected ticket ID ${ticket.id} sorted by ${config.getTicketsOrderProperty()}`,
+            );
+        }
     });
 
     context.subscriptions.push(disposable);

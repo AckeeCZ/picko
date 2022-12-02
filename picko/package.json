@@ -19,7 +19,35 @@
                 "command": "picko.helloWorld",
                 "title": "Hello World"
             }
-        ]
+        ],
+        "configuration": {
+            "title": "Picko",
+            "properties": {
+                "picko.ticketsOrder": {
+                    "type": "string",
+                    "default": "id",
+                    "enum": [
+                        "id",
+                        "title",
+                        "priority",
+                        "updatedOn"
+                    ],
+                    "enumItemLabels": [
+                        "ID",
+                        "Title",
+                        "Priority",
+                        "Date"
+                    ],
+                    "enumDescriptions": [
+                        "Ticket id, also called ticket number.",
+                        "Ticket title.",
+                        "Ticket priority.",
+                        "The date ticket was last updated"
+                    ],
+                    "description": "Ticket property to sort tickets by"
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run esbuild-base -- --minify",
